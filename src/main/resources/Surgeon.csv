@@ -1,0 +1,15 @@
+﻿name,departmentSet,workingWeekSet
+1,department1,1;2;3;4;5
+2,department2,1;2;3;5;6
+3,department3,2;3;4;5;7
+4,department4,1;2;4;5;6
+5,department5,1;2;3;4;7
+6,department6,1;2;3;4;5
+7,department7,1;2;3;4;5
+8,department8,1;2;3;4;6
+9,department9,1;2;3;4;5
+10,department10,1;2;3;5;7
+11,department11,3;4;5;6;7
+12,department12,1;2;3;4;5
+13,department13,1;3;4;5;6
+14,department14,1;2;4;5;7

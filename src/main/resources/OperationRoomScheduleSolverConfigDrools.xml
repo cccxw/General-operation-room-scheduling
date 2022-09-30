@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+    <solutionClass>com.myapp.OperationRoomSchedule</solutionClass>
+    <entityClass>com.myapp.Operation</entityClass>
+
+    <scoreDirectorFactory>
+        <scoreDrl>OperationRoomSchedule.drl</scoreDrl>
+    </scoreDirectorFactory>
+    <constructionHeuristic>
+        <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
+    </constructionHeuristic>
+    <localSearch>
+        <acceptor>
+            <entityTabuSize>7</entityTabuSize>
+        </acceptor>
+        <forager>
+            <pickEarlyType>FIRST_LAST_STEP_SCORE_IMPROVING</pickEarlyType>
+            <acceptedCountLimit>1000</acceptedCountLimit>
+        </forager>
+    </localSearch>
+    <termination>
+        <secondsSpentLimit>2000</secondsSpentLimit>
+    </termination>
+</solver>

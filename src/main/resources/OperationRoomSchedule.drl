@@ -1,0 +1,106 @@
+package com.myapp
+
+import com.myapp.Operation;
+import com.myapp.Department;
+import com.myapp.Room;
+import com.myapp.Period;
+import com.myapp.OperationRoomScoreCalculation;
+import com.myapp.OperationRoomSchedule;
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScoreHolder;
+
+global HardSoftScoreHolder scoreHolder;
+
+// ############################################################################
+// Hard constraints
+// ############################################################################
+
+rule "Room conflict"
+    when
+        $operation1 : Operation(period != null, room != null, $room : room, $id1 : id)
+        $operation2 : Operation(period != null, SameRoom($room), overlapsTime($operation1), id > $id1)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext,-100);
+end
+
+rule "surgenon unavailable"
+    when
+        $operation:Operation(surgeon!=null, surgeonUnavailable())
+    then
+        scoreHolder.addHardConstraintMatch(kcontext,-100);
+end
+
+rule "Same operation"
+    when
+        Operation($id1 : id, $patient : patient, $period : period, period != null)
+        Operation(patient == $patient, period == $period, id > $id1)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext,-100);
+end
+
+
+rule "Surgeon conflict"
+    when
+    $operation1 : Operation(period != null, $id1 : id)
+    $operation2 : Operation(period != null, overlapsTime($operation1), overlapsSurgeon($operation1), id > $id1)
+    then
+        scoreHolder.addHardConstraintMatch(kcontext,-100);
+end
+
+
+//rule "Unavailable room for Department"
+//    when
+//        $department : Department()
+//        $room : Room(departmentSet!=null, UnavailableForDepartment($department))
+//    then
+//        scoreHolder.addHardConstraintMatch(kcontext,-100);
+//end
+
+rule "Unavailable room for Department"
+    when
+        $operation:Operation(room!=null, roomUnavailable())
+    then
+        scoreHolder.addHardConstraintMatch(kcontext,-100);
+end
+
+
+rule"Not less than prediceted blocks"
+    when
+        Operation(period!=null, LessThanPredictedBlocks())
+    then
+        scoreHolder.addHardConstraintMatch(kcontext,-100);
+end
+
+
+// ############################################################################
+// Soft constraints
+// ############################################################################
+
+rule "Before Openning time"
+    when
+        operation : Operation(BeforeOpeningTime()>0)
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -operation.BeforeOpeningTime());
+end
+
+
+rule "Over Close time"
+    when
+        $operation : Operation(OverCloseTime()>0)
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -$operation.OverCloseTime());
+end
+
+
+rule"In weekend"
+    when
+        $operation : Operation(period!=null, inWeekend())
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -100);
+end
+
+rule"Not in surgeon's working day"
+    when
+        $operation : Operation(period!=null, surgeon!=null, absentDay())
+    then
+        scoreHolder.addSoftConstraintMatch(kcontext, -100);
+ end

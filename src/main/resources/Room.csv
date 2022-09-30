@@ -1,0 +1,15 @@
+﻿id,openTime,closeTime,departmentSet
+1,08:00:00,17:00:00,department1;department2;department3;department4
+2,08:00:00,17:00:00,department2;department4;department5;department6
+3,08:00:00,17:00:00,department3;department5;department6;department7
+4,08:00:00,17:00:00,department4;department5;department6;department7
+5,08:00:00,17:00:00,department1;department2;department3;department7
+6,08:00:00,17:00:00,department1;department3;department4;department7
+7,08:00:00,17:00:00,department1;department2;department5;department6
+8,08:00:00,17:00:00,department8;department9;department10;department11
+9,08:00:00,17:00:00,department9;department11;department12;department13
+10,08:00:00,17:00:00,department10;department12;department13;department14
+11,08:00:00,17:00:00,department11;department12;department13;department14
+12,08:00:00,17:00:00,department8;department9;department10;department14
+13,08:00:00,17:00:00,department8;department10;department11;department14
+14,08:00:00,17:00:00,department8;department9;department12;department13
